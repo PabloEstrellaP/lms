@@ -25,10 +25,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build
-      run: npm run build
 
     - name: Start server
-      run: npm start
+      run: node app
 env:
   MONGO_CNN: mongodb+srv://pabloestrellapalomo:D0tYY1nXnAmfsxQO@pruebas.zeup8wg.mongodb.net/
