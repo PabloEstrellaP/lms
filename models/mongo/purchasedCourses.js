@@ -15,7 +15,12 @@ const PurchasedCourse = Schema({
     type: Date,
   },
   isCompleted: {
-    type: Boolean
+    type: Boolean,
+    default: false
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false
   }
 
 })

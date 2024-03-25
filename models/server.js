@@ -5,8 +5,11 @@ import routerUser from '../routes/user.js'
 import routerCourse from '../routes/course.js'
 import routerChapter from '../routes/chapter.js'
 import routerCourseProgress from '../routes/courseProgress.js'
+import routerPurchasedCourse from '../routes/purchasedCourse.js'
 import dbConection from '../database/config.js'
 import morgan from 'morgan'
+import ServerlessHttp from 'serverless-http'
+
 export class Server {
   constructor () {
     this.port = process.env.PORT
@@ -17,6 +20,7 @@ export class Server {
       courses: '/api/courses',
       chapters: '/api/chapters',
       courseProgresses: '/api/courseProgresses',
+      purchasedCourses: '/api/purcharsedCourses',
     }
 
     this.conectDB()
@@ -63,6 +67,7 @@ export class Server {
 
   listen () {
     console.clear()
+    // ServerlessHttp(this.app);
     this.app.listen(this.port, () => {
       console.log(' -------------------------------------------------')
       console.log(`|  💻 Server runing on port ${this.port}.                 |`)
@@ -71,8 +76,10 @@ export class Server {
       console.log(`|  ${this.paths.courses}                                   |`)
       console.log(`|  ${this.paths.chapters}                                  |`)
       console.log(`|  ${this.paths.courseProgresses}                          |`)
+      console.log(`|  ${this.paths.purchasedCourses}                         |`)
       console.log(' -------------------------------------------------')
     })
+
 
     // Run local server
     if (process.env.NODE_ENV === 'development') {
