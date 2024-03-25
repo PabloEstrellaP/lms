@@ -50,6 +50,7 @@ export class Server {
     this.app.use(this.paths.courses, routerCourse)
     this.app.use(this.paths.chapters, routerChapter)
     this.app.use(this.paths.courseProgresses, routerCourseProgress)
+    this.app.use(this.paths.purchasedCourses, routerPurchasedCourse)
   }
 
   async getLocalIp () {
