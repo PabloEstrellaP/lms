@@ -60,6 +60,16 @@ export const putPurchasedCourse = (req, res = response) => {
 export const postPurchasedCourse = async(req, res = response) => {
   try { 
     const { userReference, courseReference } = req.body;
+    const isPurchasedCourse = await PurchasedCourse.findOne({
+      userReference,
+      courseReference,
+    })
+    
+    if(isPurchasedCourse) return res.status(200).json({
+      ok: true,
+      msg: isPurchasedCourse
+    })
+
     const purchasedCourse = new PurchasedCourse({
       userReference,
       courseReference,
