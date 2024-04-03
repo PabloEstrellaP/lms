@@ -16,7 +16,7 @@ export const generarJWT = (id) => {
   })
 }
 
-export const comprobarJWT = (req, res, next) => {
+export const verifyJWT = (req, res, next) => {
   try {
     if (!req.headers.authorization) {
       return res.status(400).json({

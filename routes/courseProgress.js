@@ -1,15 +1,16 @@
 import { Router } from 'express'
 import { deleteCourseProgress, getCourseProgress, getCourseProgressByPurchasedCourseId, postCourseProgress, putCourseProgress } from '../controllers/curseProgress.js'
+import { verifyJWT } from '../helpers/JWT.js'
 
 const routerUser = Router()
 
-routerUser.get('/', getCourseProgress)
-routerUser.get('/:id', getCourseProgressByPurchasedCourseId)
+routerUser.get('/', [verifyJWT], getCourseProgress)
+routerUser.get('/:id', [verifyJWT], getCourseProgressByPurchasedCourseId)
 
-routerUser.put('/:id', putCourseProgress)
+routerUser.put('/:id', [verifyJWT], putCourseProgress)
 
-routerUser.post('/', postCourseProgress)
+routerUser.post('/', [verifyJWT], postCourseProgress)
 
-routerUser.delete('/:id', deleteCourseProgress)
+routerUser.delete('/:id', [verifyJWT], deleteCourseProgress)
 
 export default routerUser
