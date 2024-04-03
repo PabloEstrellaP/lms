@@ -37,11 +37,11 @@ export const getCourseProgressByPurchasedCourseId = async (req, res = response) 
           "course._id": courseId
         }
       },
-      
+
     ])
 
     const allChapters = await getChapterByCourseId(courseId);
-  
+
     const cProgress = (courseProgress.length * 100) / allChapters.length;
 
     if (!courseProgress) return res.status(404).json({

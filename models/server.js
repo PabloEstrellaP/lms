@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import routerUser from '../routes/user.js'
+import routerAuth from '../routes/auth.js'
 import routerCourse from '../routes/course.js'
 import routerChapter from '../routes/chapter.js'
 import routerCourseProgress from '../routes/courseProgress.js'
@@ -21,6 +22,7 @@ export class Server {
       chapters: '/api/chapters',
       courseProgresses: '/api/courseProgresses',
       purchasedCourses: '/api/purcharsedCourses',
+      auth: '/api/auth'
     }
 
     this.conectDB()
@@ -47,6 +49,7 @@ export class Server {
 
   routes () {
     this.app.use(this.paths.users, routerUser)
+    this.app.use(this.paths.auth, routerAuth)
     this.app.use(this.paths.courses, routerCourse)
     this.app.use(this.paths.chapters, routerChapter)
     this.app.use(this.paths.courseProgresses, routerCourseProgress)
@@ -74,6 +77,7 @@ export class Server {
       console.log(`|  💻 Server runing on port ${this.port}.                 |`)
       console.log(`|  You can watch here: http://localhost:${this.port}/     |`)
       console.log(`|  ${this.paths.users}                                     |`)
+      console.log(`|  ${this.paths.auth}                                      |`)
       console.log(`|  ${this.paths.courses}                                   |`)
       console.log(`|  ${this.paths.chapters}                                  |`)
       console.log(`|  ${this.paths.courseProgresses}                          |`)

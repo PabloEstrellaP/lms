@@ -16,11 +16,24 @@ export const generarJWT = (id) => {
   })
 }
 
-export const comprobarJWT = (token = '') => {
+export const comprobarJWT = (req, res, next) => {
   try {
+    if (!req.headers.authorization) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Token not found'
+      })
+    }
+    const token = req.headers.authorization.split(' ')[1]
     const { id } = jwt.verify(token, process.env.JWT_KEY)
-    return [true, id]
+    req.body.userId = id;
+    next()
   } catch (error) {
-    return [false, null]
+    console.error(error)
+    console.log('Verify token is failed')
+    return res.status(500).json({
+      ok: false,
+      msg: error
+    })
   }
 }

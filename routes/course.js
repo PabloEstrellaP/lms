@@ -1,15 +1,16 @@
 import { Router } from 'express'
 import { deleteCourse, getCourse, getCoursesById, postCourse, putCourse } from '../controllers/course.js'
+import { comprobarJWT } from '../helpers/JWT.js'
 
 const routerUser = Router()
 
-routerUser.get('/', getCourse)
-routerUser.get('/:id', getCoursesById)
+routerUser.get('/', [comprobarJWT], getCourse)
+routerUser.get('/:id', [comprobarJWT], getCoursesById)
 
-routerUser.put('/:id', putCourse)
+routerUser.put('/:id', [comprobarJWT], putCourse)
 
-routerUser.post('/', postCourse)
+routerUser.post('/', [comprobarJWT], postCourse)
 
-routerUser.delete('/:id', deleteCourse)
+routerUser.delete('/:id', [comprobarJWT], deleteCourse)
 
 export default routerUser
