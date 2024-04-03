@@ -15,6 +15,10 @@ const ChapterSchema = Schema({
     type: String,
     required: true,
   },
+  video: {
+    type: String,
+    required: true
+  },
   courseReference: {
     type: Schema.Types.ObjectId,
     ref: 'Course'
