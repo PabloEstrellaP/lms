@@ -9,6 +9,7 @@ export const getCourseProgressByPurchasedCourseId = async (req, res = response) 
     const cId = req.params['id']
     const { enabledProgressbarr } = req.query;
     const courseId = mongoose.Types.ObjectId(cId);
+    // const courseId = mongoose.Types.ObjectId(cId);
     const courseProgress = await CourseProgress.aggregate([
       {
         $lookup: {
@@ -40,26 +41,32 @@ export const getCourseProgressByPurchasedCourseId = async (req, res = response) 
 
     ])
 
-    const allChapters = await getChapterByCourseId(courseId);
-
-    const cProgress = (courseProgress.length * 100) / allChapters.length;
-
-    for(const oneChapter of courseProgress) {
-      for(const changeChapter of allChapters) {
-        changeChapter.isWached = false
-        if(oneChapter._id === changeChapter._id) changeChapter.isWached = true
-      }
-    }
-
     if (!courseProgress) return res.status(404).json({
       ok: false,
       msg: `CourseProgress not found by Purchases Course ID: ${cId}`
     })
 
+    const allChapters = await getChapterByCourseId(courseId);
+
+    const cProgress = (courseProgress.length * 100) / allChapters.length;
+
+    const isChangedChapter = []
+    allChapters.forEach(cChapter => {
+      const isWatched = { isWatched: false }
+      let joinObject = { ...isWatched, ...cChapter._doc };
+      const newObj = courseProgress.find(obj => `${obj.chapter._id}` === `${cChapter._id}`);
+      if(newObj) {
+        isWatched.isWatched = true;
+        joinObject = { ...isWatched, ...cChapter._doc };
+
+      }
+      isChangedChapter.push(joinObject)
+    })
+
     return res.status(200).json({
       ok: true,
       progress: cProgress.toFixed(2),
-      msg: enabledProgressbarr ? [] : allChapters
+      msg: enabledProgressbarr ? [] : isChangedChapter
     })
 
   } catch (error) {
