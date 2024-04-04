@@ -1,6 +1,9 @@
 import { response } from 'express'
 import Chapter from '../models/mongo/chapters.js'
 
+import { isPurchasedCourseByUser } from '../controllers/purchasedCourses.js'
+import SRCOneTime from '../helpers/SRCOneTime.js'
+
 export const getChapterByCourseId = async (courseId) => {
   try {
     const chapter = await Chapter.find({
@@ -19,16 +22,31 @@ export const getChapterByCourseId = async (courseId) => {
 export const getChapterById = async (req, res = response) => {
   try {
     const URL_VIDEO = process.env.URL_PATH;
+    const userId = req.body.userId;
     const cId = req.params['id']
+
     const chapter = await Chapter.findOne({
       _id: cId,
       isDeleted: false,
-    })
+    }).populate('courseReference')
 
     if (!chapter) return res.status(404).json({
       ok: false,
       msg: `Chapter not found by ID: ${cId}`
     })
+
+    const isPurschased = await isPurchasedCourseByUser(userId, chapter.courseReference._id)
+
+    if(!isPurschased) return res.status(404).json({
+      ok: false,
+      msg: 'Access denied'
+    })
+
+    // const videoSRC = await SRCOneTime(URL_VIDEO + chapter.video);
+    // console.log(URL_VIDEO + chapter.video)
+    // console.log(videoSRC)
+    // if(videoSRC) chapter.video = videoSRC;
+
 
     return res.status(200).json({
       ok: true,

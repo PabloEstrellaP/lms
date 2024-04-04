@@ -1,6 +1,23 @@
 import { response } from 'express'
 import PurchasedCourse from '../models/mongo/purchasedCourses.js'
 
+export const isPurchasedCourseByUser = async (userId, courseId) => {
+  try {
+    const purchasedCourse = await PurchasedCourse.findOne({
+      userReference: userId,
+      courseReference: courseId,
+      isDeleted: false,
+    })
+
+    if(!purchasedCourse) return false
+    return true
+    
+  } catch (error) {
+    console.error(error)
+    throw new Error(error)
+  }
+}
+
 export const getPurchasedCourseByUserIdAndCourseId = async(req, res = response) => {
   try {
     const { userReference, courseReference } = req.query;
