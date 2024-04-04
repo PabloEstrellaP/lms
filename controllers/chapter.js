@@ -48,6 +48,8 @@ export const getChapterById = async (req, res = response) => {
     // if(videoSRC) chapter.video = videoSRC;
 
 
+    chapter.video = URL_VIDEO + chapter.video;
+
     return res.status(200).json({
       ok: true,
       msg: chapter
