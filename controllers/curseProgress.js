@@ -44,6 +44,13 @@ export const getCourseProgressByPurchasedCourseId = async (req, res = response) 
 
     const cProgress = (courseProgress.length * 100) / allChapters.length;
 
+    for(const oneChapter of courseProgress) {
+      for(const changeChapter of allChapters) {
+        changeChapter.isWached = false
+        if(oneChapter._id === changeChapter._id) changeChapter.isWached = true
+      }
+    }
+
     if (!courseProgress) return res.status(404).json({
       ok: false,
       msg: `CourseProgress not found by Purchases Course ID: ${cId}`
@@ -52,7 +59,7 @@ export const getCourseProgressByPurchasedCourseId = async (req, res = response) 
     return res.status(200).json({
       ok: true,
       progress: cProgress.toFixed(2),
-      msg: enabledProgressbarr ? [] : courseProgress
+      msg: enabledProgressbarr ? [] : allChapters
     })
 
   } catch (error) {
