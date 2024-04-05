@@ -18,8 +18,10 @@ const CourseSchema = Schema({
   isDeleted: {
     type: Boolean,
     default: false
+  },
+  certificate: {
+    type: String
   }
-
 })
 
 // CourseSchema.method('toJSON', function () {
