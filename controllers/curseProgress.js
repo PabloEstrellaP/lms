@@ -128,7 +128,7 @@ export const postCourseProgress = async (req, res = response) => {
     await courseProgress.save()
     return res.status(200).json({
       ok: true,
-      msg: courseProgress
+      msg: 'Progress is saved'
     })
 
   } catch (error) {
