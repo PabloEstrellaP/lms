@@ -107,7 +107,8 @@ export const putCourseProgress = (req, res = response) => {
 
 export const postCourseProgress = async (req, res = response) => {
   try {
-    const { userReference, chapterReference } = req.body;
+    const { chapterReference } = req.body;
+    const userReference = req.body.userId;
 
     const isAlreadyAdded = await CourseProgress.findOne({
       userReference,
