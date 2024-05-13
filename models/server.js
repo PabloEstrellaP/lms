@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import routerUser from '../routes/user.js'
 import routerAuth from '../routes/auth.js'
@@ -45,6 +46,7 @@ export class Server {
     this.app.use(express.json())
     this.app.use(express.static('public'))
     this.app.use(morgan('dev'))
+    this.app.use(cookieParser())
   }
 
   routes () {

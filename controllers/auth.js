@@ -24,6 +24,14 @@ export const login = async (req, res = response) => {
 
         const token = await generarJWT(user._id);
 
+        res.cookie('isLogedLMS', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'lax',
+            // maxAge: 1000
+            expires: new Date('2024-05-14')
+        });
+
         return res.status(200).json({
             ok: true,
             msg: 'Login',
