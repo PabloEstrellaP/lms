@@ -22,7 +22,7 @@ export const getChapterByCourseId = async (courseId) => {
 export const getChapterById = async (req, res = response) => {
   try {
     const URL_VIDEO = process.env.URL_PATH;
-    const userId = req.body.userId;
+    const userId = req.body.userId ?? '65f28c058f5ecbc91c55ab3d';
     const cId = req.params['id']
 
     const chapter = await Chapter.findOne({
