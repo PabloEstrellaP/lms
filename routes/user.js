@@ -4,13 +4,18 @@ import { verifyJWT } from '../helpers/JWT.js'
 
 const routerUser = Router()
 
-routerUser.get('/', [verifyJWT], getUser)
-routerUser.get('/:id', [verifyJWT], getUserById)
+routerUser.get('/', getUser)
+// routerUser.get('/', [verifyJWT], getUser)
+routerUser.get('/:id', getUserById)
+// routerUser.get('/:id', [verifyJWT], getUserById)
 
-routerUser.put('/:id', [verifyJWT], putUser)
+routerUser.put('/:id', putUser)
+// routerUser.put('/:id', [verifyJWT], putUser)
 
-routerUser.post('/', [verifyJWT], postUser)
+routerUser.post('/', postUser)
+// routerUser.post('/', [verifyJWT], postUser)
 
-routerUser.delete('/:id', [verifyJWT], deleteUser)
+routerUser.delete('/:id', deleteUser)
+// routerUser.delete('/:id', [verifyJWT], deleteUser)
 
 export default routerUser
